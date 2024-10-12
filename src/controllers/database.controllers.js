@@ -1,10 +1,10 @@
 import { getConnection } from "../database/database.js";
-const getUsuario = async (req,res) =>
+const getUsuarios = async (req,res) =>
     {   
         try 
         {
             const connection = await getConnection()
-            const result = await connection.query('SELECT * FROM Usuario')
+            const result = await connection.query('select * from bancoestebanquito.usuario')
             res.json(result[0]);
         } catch (error) 
         {
@@ -17,7 +17,7 @@ const getTransacciones = async (req,res) =>
         try 
         {
             const connection = await getConnection()
-            const result = await connection.query('SELECT * FROM Transaccion')
+            const result = await connection.query('SELECT * FROM bancoestebanquito.transaccion')
             res.json(result[0]);
         } catch (error) 
         {
@@ -30,7 +30,7 @@ const getPrestamos = async (req,res) =>
         try 
         {
             const connection = await getConnection()
-             const result = await connection.query('SELECT * FROM Prestamo')
+             const result = await connection.query('SELECT * FROM bancoestebanquito.prestamo')
             res.json(result[0]);
         } catch (error) 
         {
@@ -43,7 +43,7 @@ const getReportes = async (req,res) =>
         try 
         {
             const connection = await getConnection()
-             const result = await connection.query('SELECT * FROM Reporte')
+             const result = await connection.query('SELECT * FROM bancoestebanquito.reporte')
             res.json(result[0]);
         } catch (error) 
         {
@@ -52,5 +52,5 @@ const getReportes = async (req,res) =>
         }
     }       
 export const metodosBanco = {
-    getUsuario,getTransacciones,getPrestamos,getReportes
+    getUsuarios,getTransacciones,getPrestamos,getReportes
 };

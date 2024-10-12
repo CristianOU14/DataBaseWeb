@@ -1,6 +1,5 @@
 import mysql from "mysql2/promise";
 import config from "../config.js";
-console.log(config.dbUser, config.dbPassword,"hollas")
 const connection = mysql.createConnection({
     host: config.dbHost,
     user: config.dbUser,
