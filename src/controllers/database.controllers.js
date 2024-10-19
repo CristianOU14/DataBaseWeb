@@ -4,7 +4,7 @@ const getUsuarios = async (req,res) =>
         try 
         {
             const connection = await getConnection()
-            const result = await connection.query('select * from bancoestebanquito.usuario')
+            const result = await connection.query('select * from usuario')
             res.json(result[0]);
         } catch (error) 
         {
@@ -17,7 +17,7 @@ const getTransacciones = async (req,res) =>
         try 
         {
             const connection = await getConnection()
-            const result = await connection.query('SELECT * FROM bancoestebanquito.transaccion')
+            const result = await connection.query('SELECT * FROM transaccion')
             res.json(result[0]);
         } catch (error) 
         {
@@ -30,7 +30,7 @@ const getPrestamos = async (req,res) =>
         try 
         {
             const connection = await getConnection()
-             const result = await connection.query('SELECT * FROM bancoestebanquito.prestamo')
+             const result = await connection.query('SELECT * FROM prestamo')
             res.json(result[0]);
         } catch (error) 
         {
@@ -43,7 +43,7 @@ const getReportes = async (req,res) =>
         try 
         {
             const connection = await getConnection()
-             const result = await connection.query('SELECT * FROM bancoestebanquito.reporte')
+             const result = await connection.query('SELECT * FROM reporte')
             res.json(result[0]);
         } catch (error) 
         {
