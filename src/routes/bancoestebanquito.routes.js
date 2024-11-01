@@ -12,7 +12,7 @@ const router = Router();
 router.get("/users",metodosUsuarios.getUsuarios);
 router.post("/user", cors({origin: "http://localhost:5173"}), metodosUsuarios.getUsuario);
 router.get("/transfers",metodosTransaccion.getTransacciones);
-router.get("/transfer",metodosTransaccion.getTransaccion);
+router.post("/transfer",cors({origin: "http://localhost:5173"}),metodosTransaccion.getTransaccion);
 router.get("/loans",metodosPrestamos.getPrestamos);
 router.get("/loan",metodosPrestamos.getPrestamo);
 router.get("/reports",metodosReportes.getReportes);

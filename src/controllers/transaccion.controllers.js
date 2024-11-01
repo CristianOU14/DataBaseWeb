@@ -2,7 +2,7 @@ import { getConnection } from "../database/database.js";
 
 const getTransaccion = async (req,res) =>
     {   
-        const idusuario  = req.body.usuario_id;
+        const idusuario  = req.body.idUsuario;
         try 
         {
             const connection = await getConnection()
