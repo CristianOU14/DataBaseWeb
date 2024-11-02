@@ -25,10 +25,9 @@ const registerUser = async (req, res) => {
             return res.status(400).json({ message: 'El correo electrónico ya está registrado.' });
         }
         const connection = await getConnection();
-        const hashedPassword = await bcrypt.hash(contraseña, 10);
         const result = await connection.query(
             'INSERT INTO usuario (nombre, email, contraseña, numcuenta, tipo, saldo) VALUES (?, ?, ?, ?, ?, 0)',
-            [nombre, email, hashedPassword, numcuenta, tipo, saldo]
+            [nombre, email, contraseña, numcuenta, tipo]
         );
         res.status(201).json({ idUsuario: result.insertId, message: 'Usuario registrado con éxito' });
     } catch (error) {
