@@ -17,5 +17,5 @@ router.get("/loans",metodosPrestamos.getPrestamos);
 router.get("/loan",metodosPrestamos.getPrestamo);
 router.get("/reports",metodosReportes.getReportes);
 router.get("/report",metodosReportes.getReporte);
-router.get("/register",metodosRegister.registerUser);
+router.post("/register",cors({origin: "http://localhost:5173"}),metodosRegister.registerUser);
 export default router;
