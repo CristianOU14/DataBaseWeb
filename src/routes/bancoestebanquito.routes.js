@@ -4,6 +4,7 @@ import { metodosTransaccion } from "../controllers/transaccion.controllers.js";
 import { metodosPrestamos } from "../controllers/prestamo.controllers.js";
 import { metodosReportes } from "../controllers/reporte.controllers.js";
 import { metodosRegister } from "../controllers/register.controllers.js";
+import { metodosTransferencia } from "../controllers/transferencia.controllers.js";
 import cors from 'cors'
 const router = Router();
 
@@ -18,4 +19,5 @@ router.get("/loan",metodosPrestamos.getPrestamo);
 router.get("/reports",metodosReportes.getReportes);
 router.get("/report",metodosReportes.getReporte);
 router.post("/register",cors({origin: "http://localhost:5173"}),metodosRegister.registerUser);
+router.post("/transferencia",cors({origin: "http://localhost:5173"}),metodosTransferencia.registerTransferencia);
 export default router;
