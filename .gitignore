@@ -28,5 +28,5 @@ dist-ssr
 *.sln
 *.sw?
 
-# Ignore database.js
-src/database/database.js
+# Ignore .env
+src/database/.env
