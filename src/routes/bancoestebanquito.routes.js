@@ -19,5 +19,5 @@ router.get("/loan",metodosPrestamos.getPrestamo);
 router.get("/reports",metodosReportes.getReportes);
 router.get("/report",metodosReportes.getReporte);
 router.post("/register",cors({origin: "http://localhost:5173"}),metodosRegister.registerUser);
-router.post("/transferencia",cors({origin: "http://localhost:5173"}),metodosTransferencia.registerTransferencia);
+router.post("/transferir",cors({origin: "http://localhost:5173"}),metodosTransferencia.registerTransferencia);
 export default router;
