@@ -87,6 +87,7 @@ const registerPrestamo = async (req, res) => {
             const connection = await getConnection();
             const newEstado = 'aprobado';
             const result = await connection.query('INSERT INTO Prestamo (usuario_id, monto, plazo, estado, fecha_solicitud) VALUES (?, ?, ?, ?, ?)', [idUsuario, valorPedir, plazo, newEstado, fecha]);
+            await connection.query('UPDATE Usuario SET saldo = saldo + ? WHERE idUsuario = ?', [valorPedir, idUsuario])
             res.status(201).json({ idPrestamo: result.insertId, message: 'Prestamo registrado con éxito' });
         } else {
             res.status(400).json({ message: 'Error en el estado del prestamo' });
