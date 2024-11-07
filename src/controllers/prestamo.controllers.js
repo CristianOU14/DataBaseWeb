@@ -2,23 +2,66 @@ import { getConnection } from "../database/database.js";
 import { check, validationResult } from "express-validator";
 
 const getPrestamo = async (req, res) => {
-    const idusuario = req.body.usuario_id;
+    const idusuario = req.body.idUsuario;
+    if (!idusuario) {
+        return res.status(400).json({ error: 'El campo idUsuario es requerido' });
+    }
     try {
         const connection = await getConnection();
         const result = await connection.query('SELECT * FROM Prestamo WHERE usuario_id = ?', [idusuario]);
-        res.json(result[0]);
+        res.json(result);
     } catch (error) {
         console.error('Error al obtener el prestamo:', error);
         res.status(500).json({ error: 'Error al obtener el prestamo' });
     }
 };
 
+const checkSaldo = async (idUsuario, monto) => {
+    try {
+      const connection = await getConnection();
+      const [saldo] = await connection.query('SELECT saldo FROM Usuario WHERE idUsuario = ?', [idUsuario]);
+      if (saldo.length === 0 || saldo[0].saldo < monto) {
+        return false;
+      } else {
+        return true;
+      }
+    } catch (error) {
+        console.error('Error al verificar el saldo:', error);
+        throw error;
+    }
+};
+
+const deletePrestamo = async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      console.log('Errores de validación:', errors.array());
+      return res.status(400).json({ errors: errors.array() });
+    }
+  
+    const { idPrestamo, usuario_id, monto } = req.body;
+  
+    try {
+      const saldoSuficiente = await checkSaldo(usuario_id, monto);
+      if (!saldoSuficiente) {
+        return res.status(400).json({ message: 'Saldo insuficiente' });
+      } else {
+        const connection = await getConnection();
+        await connection.query('DELETE FROM Prestamo WHERE idPrestamo = ?', [idPrestamo]);
+        await connection.query('UPDATE Usuario SET saldo = saldo - ? WHERE idUsuario = ?', [monto, usuario_id]);
+        res.json({ message: 'Prestamo eliminado con éxito' });
+      }
+    } catch (error) {
+      console.error('Error al eliminar el prestamo:', error);
+      res.status(500).json({ error: 'Error al eliminar el prestamo' });
+    }
+  };
+
 const getPrestamos = async (req, res) => {
     try {
         console.log(req.body);
         const connection = await getConnection();
         const result = await connection.query('SELECT * FROM prestamo');
-        res.json(result[0]);
+        res.json(result);
     } catch (error) {
         console.error('Error al obtener los prestamos:', error);
         res.status(500).json({ error: 'Error al obtener los prestamos' });
@@ -55,5 +98,5 @@ const registerPrestamo = async (req, res) => {
 };
 
 export const metodosPrestamos = {
-    getPrestamos, getPrestamo, registerPrestamo
+    getPrestamos, getPrestamo, registerPrestamo, deletePrestamo
 };
